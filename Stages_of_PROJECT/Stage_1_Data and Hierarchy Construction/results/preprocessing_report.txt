@@ -1,0 +1,102 @@
+========================================================================
+  HiDMamba — Notebook 00: PTB-XL Preprocessing Report
+========================================================================
+
+-- Configuration -------------------------------------------------------
+  PTB-XL root              : /kaggle/input/datasets/iaadidev/ptb-xl-a-large-public-ecg-dataset-1-0-3/ptb-xl-a-large-publicly-available-electrocardiography-dataset-1.0.3
+  Sampling frequency       : 100 Hz  (records100/)
+  Target signal length     : 1000 samples  (10 s)
+  SCP confidence threshold : >= 50.0%
+  Label columns            : 26 unique  (5 super + 21 sub; NORM and STTC counted once each)
+  Fold split               : train [1, 2, 3, 4, 5, 6, 7, 8] | val 9 | test 10
+  Normalisation            : per-lead z-score, fit on train folds only
+
+-- Record Counts -------------------------------------------------------
+  Records in database      : 21,799
+  Successfully loaded      : 21,799
+  Failed to load           : 0
+  With >=1 diag label      : 20,373
+  Multi-superclass         : 4,390
+  All-zero (kept)          : 1,426
+
+-- Fold Distribution (loaded records) ----------------------------------
+  Train (folds 1-8)        : 17,418
+  Val   (fold  9)          : 2,183
+  Test  (fold 10)          : 2,198
+  Patient overlap (train/test): 0  [PASS]
+
+-- Superclass Distribution (all loaded records) -------------------------
+  NORM    :   9,438 / 21,799  ( 43.3%)
+  MI      :   4,134 / 21,799  ( 19.0%)
+  STTC    :   5,078 / 21,799  ( 23.3%)
+  CD      :   4,891 / 21,799  ( 22.4%)
+  HYP     :   2,258 / 21,799  ( 10.4%)
+
+-- Subclass Distribution (all 23 original subclasses) ------------------
+  Subclass                  Count       %  pos_weight
+  NORM                      9,438    43.3%         1.3x  [= superclass col]
+  AMI                       2,559    11.7%         7.5x
+  IMI                       2,242    10.3%         8.7x
+  LMI                         122     0.6%       173.2x
+  PMI                          13     0.1%      1934.3x
+  ISCA                        934     4.3%        22.2x
+  ISCI                        391     1.8%        54.5x
+  ISC_                      1,260     5.8%        16.3x
+  NST_                        557     2.6%        37.8x
+  STTC                      5,078    23.3%         3.3x  [= superclass col]
+  CLBBB                       536     2.5%        39.7x
+  CRBBB                       540     2.5%        39.4x
+  ILBBB                        76     0.3%       284.5x
+  IRBBB                     1,115     5.1%        18.5x
+  IVCD                        787     3.6%        26.6x
+  LAFB/LPFB                 1,796     8.2%        11.1x
+  WPW                          79     0.4%       271.2x
+  _AVB                        820     3.8%        25.6x
+  LAO/LAE                     415     1.9%        51.1x
+  LVH                       1,751     8.0%        11.3x
+  RAO/RAE                      98     0.4%       219.5x
+  RVH                         112     0.5%       188.3x
+  SEHYP                        29     0.1%       724.8x
+
+-- Per-Lead Normalisation Stats (train fold) ----------------------------
+  Lead     Raw Mean (mV)   Raw Std (mV)
+  I             -0.00173        0.15690
+  II            -0.00149        0.16023
+  III            0.00023        0.16348
+  aVR            0.00159        0.13586
+  aVL           -0.00093        0.13886
+  aVF           -0.00060        0.14150
+  V1             0.00016        0.23043
+  V2            -0.00095        0.33133
+  V3            -0.00155        0.32733
+  V4            -0.00136        0.29181
+  V5            -0.00080        0.26717
+  V6            -0.00240        0.27583
+
+-- Phase 0 Sanity Checks -----------------------------------------------
+  [OK] Signal shape is (N, 12, 1000)
+  [OK] Label rows == signal rows
+  [OK] ecg_id_order length == signal rows
+  [OK] No NaN in signals
+  [OK] No Inf in signals
+  [OK] Train mean close to 0  (|m| < 0.01)
+  [OK] Train std  close to 1  (|s-1| < 0.05)
+  [OK] All strat_fold values in 1-10
+  [OK] No duplicate columns in CSV
+  [OK] All label values are binary {0, 1}
+  [OK] Hierarchy has 5 superclasses
+  [OK] norm_stats has lead_mean and lead_std
+  [OK] Zero patient overlap train/test
+
+-- Output Artifacts ----------------------------------------------------
+  ptbxl_100hz.npy         : shape (21799, 12, 1000)  float32  normalised
+  ecg_id_order.npy        : shape (21799,)  int64   row->ecg_id
+  labels_multihot.csv     : (21799, 27)  (fold + 26 unique label cols)
+  label_hierarchy.json    : 5 superclasses -> subclasses
+  norm_stats.json         : per-lead mean/std
+  class_weights.json      : pos_weight per label
+  fold_split.json         : ecg_id -> fold
+
+-- Next Step -----------------------------------------------------------
+  Version /kaggle/working as Kaggle Dataset 'ptbxl-processed-v1'.
+========================================================================

@@ -1,0 +1,35 @@
+{
+  "STTC": [
+    "ISCA",
+    "ISCI",
+    "ISC_",
+    "NST_",
+    "STTC"
+  ],
+  "NORM": [
+    "NORM"
+  ],
+  "MI": [
+    "AMI",
+    "IMI",
+    "LMI",
+    "PMI"
+  ],
+  "HYP": [
+    "LAO/LAE",
+    "LVH",
+    "RAO/RAE",
+    "RVH",
+    "SEHYP"
+  ],
+  "CD": [
+    "CLBBB",
+    "CRBBB",
+    "ILBBB",
+    "IRBBB",
+    "IVCD",
+    "LAFB/LPFB",
+    "WPW",
+    "_AVB"
+  ]
+}
